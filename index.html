@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content=
+    "width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no"
+    name="viewport">
+    
+    <link href="jqm/jquery.mobile-1.4.2.min.css" rel="stylesheet">
+    <link href="css/myStyles.css" rel="stylesheet">
+    <script src="js/jquery.js"></script>
+    <script src="jqm/jquery.mobile-1.4.2.min.js"></script>
+    <script type='application/javascript' src='js/fastclick.js'></script>
+
+    <script src="myJS/app.js"></script>
+    <script src="js/modernizr.js"></script>
+   
+    <script>
+jQuery(document).ready(function($) {
+           //setUser();                         
+      checkUser();
+        
+        $.mobile.loading;
+
+        console.log("PhoneGap is ready");
+        
+       
+        //$.mobile.changePage( "#ListadoPage", { transition: "slide"} );
+		
+		$( ".precio" ).change(function() {
+		updateTotal();
+		});
+        
+        $('#verLista').bind("click", function() {
+			$.mobile.changePage( "#ListadoPage");
+            //getList();
+        });
+        
+        $('#SaveBtn').bind("click", function() {
+            createPres();
+        });
+		 $('#logout').bind("click", function() {
+             logoutUser();
+        });
+        
+         $('#login').submit(function() {
+            autentication();
+            })
+		 
+		$("#ListadoPage").on("pageshow",function(e) {
+		 getList();
+		});
+		
+		
+		$("#AccountPage").on("pageshow",function(e) {
+		 getUserDetalle();
+		});
+		
+		$("#AddPage").on("pageshow",function(e) {
+			
+		setCurrentUserADD();
+		});
+		 
+		 
+		 
+		 
+		
+        
+    }  );
+	
+	$(function() {
+    FastClick.attach(document.body);
+	});
+    </script>
+
+    <title>App</title>
+</head>
+
+<body>
+
+
+
+	<!-- PAGE: Home -->
+
+    <div data-role="page" id="Home">
+        <header data-position="fixed" data-role="header" class="corporateBG">
+            
+
+            <h1><img src="images/logo_gasnatural.jpg" /></h1>
+        </header>
+
+        <section data-role="content">
+        <a href="#ListadoPage"  id='verLista' class="ui-btn ui-shadow ui-corner-all ui-icon-bullets ui-btn-icon-right">Listado Presupuestos</a>
+        <a href="#AddPage" class="ui-btn ui-shadow ui-corner-all ui-icon-plus ui-btn-icon-right">Crear Nuevo</a>
+        <a href="#AccountPage" class="ui-btn ui-shadow ui-corner-all ui-icon-user ui-btn-icon-right">Perfil Usuario</a>
+        <a href="#LocalOffline" class="ui-btn ui-shadow ui-corner-all ui-icon-user ui-btn-icon-right">OFFLINEo</a>
+           
+        </section>
+    </div>
+    <!-- PAGE: ListadoPage -->
+
+    <div data-role="page" id="ListadoPage">
+        <header data-position="fixed" data-role="header" class="corporateBG">
+            <a class="ui-btn-left verLista" data-icon="carat-l" href="#Home">Menu</a>
+
+            <h1>Listado</h1><a class="ui-btn-right" data-icon="plus" href="#AddPage">Nuevo</a>
+        </header>
+
+        <section data-role="content" id="lista">
+            <ul data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-filter="true"
+            data-filter-placeholder="Buscar Presupuesto..." data-inset="true" data-role="listview"
+            data-split-icon="delete" data-theme="a" id="item_detail"></ul>
+        </section>
+    </div>
+    <!-- PAGE: Add PRESUPUESTO Page -->
+
+    <div data-role="page" id="AddPage">
+        <header data-position="fixed" data-role="header" class="corporateBG">
+            <a data-icon="back" data-rel="back" data-role="button">Back</a>
+
+            <h1>Crear Presupuesto</h1>
+        </header>
+
+        <form id="newPresForm" name="newPresForm">
+            <ul data-inset="true" data-role="listview">
+                <li data-role="list-divider">Operario</li>
+
+                <li style="list-style: none"><input data-clear-btn="true" id="id_usuario" name=
+                "id_usuario"  value="" readonly></li>
+
+                <li class="ui-field-contain"><label for="label_operario">Operario</label>
+                <select id="label_operario" name="label_operario">
+                    <option value="Miguel Anaya">
+                        Miguel Anaya
+                    </option>
+
+                    <option value="Raúl Arquillo">
+                        Raúl Arquillo
+                    </option>
+
+                    <option value="Osmany Bonilla">
+                        Osmany Bonilla
+                    </option>
+
+                    <option value="David Candial">
+                        David Candial
+                    </option>
+                </select></li>
+
+                <li class="ui-field-contain"><label for="operario_telefono">Teléfono</label>
+                <input data-clear-btn="true" id="operario_telefono" name="operario_telefono" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="inicio_visita">Inicio Visita</label>
+                <input data-clear-btn="true" id="inicio_visita" name="inicio_visita" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="fin_visita">Fin Visita</label>
+                <input data-clear-btn="true" id="fin_visita" name="fin_visita" type="text"
+                value=""></li>
+            </ul>
+
+            <ul data-inset="true" data-role="listview">
+                <li data-role="list-divider">Datos de Cliente</li>
+
+                <li class="ui-field-contain"><label for="cliente_nombre">Nombre</label>
+                <input data-clear-btn="true" id="cliente_nombre" name="cliente_nombre" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="cliente_dni">DNI/NIF/NIE</label>
+                <input data-clear-btn="true" id="cliente_dni" name="cliente_dni" type="text" value=""></li>
+
+                <li class="ui-field-contain"><label for="cliente_direccion">Dirección</label> 
+                <textarea cols="40" id="cliente_direccion" name="cliente_direccion" rows="8">
+</textarea></li>
+
+                <li class="ui-field-contain"><label for="cliente_cp">C. Postal</label>
+                <input data-clear-btn="true" id="cliente_cp" name="cliente_cp" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="cliente_municipio">Municipio</label>
+                <input data-clear-btn="true" id="cliente_municipio" name="cliente_municipio" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="cliente_telefono">Telefono</label>
+                <input data-clear-btn="true" id="cliente_telefono" name="cliente_telefono" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="cliente_email">Email</label>
+                <input data-clear-btn="true" id="cliente_email" name="cliente_email" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="cliente_movil">Movíl</label>
+                <input data-clear-btn="true" id="cliente_movil" name="cliente_movil" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="numero_ot">Numero OT</label>
+                <input data-clear-btn="true" id="numero_ot" name="numero_ot" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="marca_caldera">Marca Caldera</label>
+                <input data-clear-btn="true" id="marca_caldera" name="marca_caldera" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="modelo_caldera">Modelo Caldera</label>
+                <input data-clear-btn="true" id="modelo_caldera" name="modelo_caldera" type="text"
+                value=""></li>
+                 <li class="ui-field-contain"><label for="matricula_caldera">Matricula Caldera</label>
+                <input data-clear-btn="true" id="matricula_caldera" name="matricula_caldera" type="text"
+                value=""></li>
+            </ul>
+
+            <ul data-inset="true" data-role="listview">
+                <li data-role="list-divider">Trabajos Comprendidos</li>
+
+                <li class="ui-field-contain">
+                    <table class="ui-responsive table-stroke" data-role="table" id=
+                    "table-column-toggle" width="100%">
+                        <thead>
+                            <tr>
+                                <th></th>
+
+                                <th data-priority="3"></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td width="89%"><label for="desc_concepto1">Concepto 1</label>
+                                <input class="concepto" data-clear-btn="true" id="desc_concepto1"
+                                name="desc_concepto1" type="text" value=""></td>
+
+                                <td><label for="precio_concepto1">Precio 1</label>
+                                <input data-clear-btn="true" id="precio_concepto1" name=
+                                "precio_concepto1" type="number" class="precio" value=""></td>
+                            </tr>
+
+                            <tr>
+                               <td width="89%"><label for="desc_concepto2">Concepto 2</label>
+                                <input class="concepto" data-clear-btn="true" id="desc_concepto2"
+                                name="desc_concepto2" type="text" value=""></td>
+
+                                <td><label for="precio_concepto2">Precio 2</label>
+                                <input data-clear-btn="true" id="precio_concepto2" name=
+                                "precio_concepto2" type="number" class="precio" value=""></td>
+                            </tr>
+
+                            <tr>
+                                <td width="89%"><label for="desc_concepto3">Concepto 3</label>
+                                <input class="concepto" data-clear-btn="true" id="desc_concepto3"
+                                name="desc_concepto3" type="text" value=""></td>
+
+                                <td><label for="precio_concepto3">Precio 3</label>
+                                <input data-clear-btn="true" id="precio_concepto3" name=
+                                "precio_concepto3" type="number" class="precio" value=""></td>
+                            </tr>
+
+                            <tr>
+                                <td width="89%"><label for="desc_concepto4">Concepto 4</label>
+                                <input class="concepto" data-clear-btn="true" id="desc_concepto4"
+                                name="desc_concepto4" type="text" value=""></td>
+
+                                <td><label for="precio_concepto4">Precio 4</label>
+                                <input data-clear-btn="true" id="precio_concepto4" name=
+                                "precio_concepto4" type="number" class="precio" value=""></td>
+                            </tr>
+
+                            <tr>
+                                <td width="89%"><label for="desc_concepto5">Concepto 5</label>
+                                <input class="concepto" data-clear-btn="true" id="desc_concepto5"
+                                name="desc_concepto5" type="text" value=""></td>
+
+                                <td><label for="precio_concepto5">Precio5</label>
+                                <input data-clear-btn="true" id="precio_concepto5" name=
+                                "precio_concepto5" type="number" class="precio" value=""></td>
+                            </tr>
+
+                            <tr>
+                                <td width="89%"></td>
+
+                                <td><label for="total">Total</label>
+                                <input data-clear-btn="true" id="total" name=
+                                "total" type="text" value=""></td>
+                            </tr>
+
+                            <tr>
+                                <td width="89%"></td>
+
+                                <td><label for="iva">21% IVA</label>
+                                <input data-clear-btn="true" id="iva" name=
+                                "iva" type="text" value=""></td>
+                            </tr>
+
+                            <tr>
+                                <td width="89%"></td>
+
+                                <td><label for="total_iva">TOTAL + IVA Incluido</label>
+                                <input data-clear-btn="true" id="total_iva" name=
+                                "total_iva" type="text" value=""></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </li>
+            </ul>
+
+            <ul data-inset="true" data-role="listview">
+                <li data-role="list-divider">Observaciones</li>
+
+                <li class="ui-field-contain"><label for="observaciones	">Observaciones</label>
+                <input data-clear-btn="true" id="observaciones" name="observaciones" type="text"
+                value=""></li>
+
+                <li class="ui-field-contain"><label for="name2">Estado del ticket</label>
+                <label><input id="radio-choice-0a" name="radio-choice-0" type="radio">Cliente
+                Acepta</label> <label for="name2"></label> <label for="radio-choice-0b">Cliente No
+                Acepta</label> <input class="custom" id="radio-choice-0b" name="radio-choice-0"
+                type="radio"></li>
+
+                <li class="ui-field-contain"><label for="name1243">Queda en servicio</label>
+                <label><input id="radio-choice-1a" name="radio-choice-1" type="radio">Si</label>
+                <label for="radio-choice-1qwd"></label> <label for="radio-choice-1b">No</label>
+                <input class="custom" id="radio-choice-1b" name="radio-choice-1" type="radio"></li>
+<a class="ui-btn ui-corner-all ui-btn-b" id="SaveBtn">SALVA</a>
+                
+            </ul>
+        </form>
+    </div><!-- PAGE: Detail Page -->
+
+    <div data-role="page" id="Detalle">
+        <header data-position="fixed" data-role="header" class="corporateBG">
+            <a data-icon="back" data-rel="back" data-role="button">Back</a>
+
+            <h1></h1>
+        </header>
+
+        <section data-role="content">
+            <div id="detallePres"></div>
+        </section>
+    </div>
+    
+    
+    <!-- PAGE: LOGIN -->
+
+    <div data-role="page" id="LoginPage">
+        <div data-role="header" class="corporateBG">
+            <h1>Autenticacion de Usuario</h1>
+        </div>
+
+        <div data-role="content">
+            <form id="login" name="login">
+                <label>Usuario</label> <input id="nombredeusuario" name="nombredeusuario" type=
+                "text"> <label>Password</label> <input id="clave" name="clave" type="password">
+                <input id="botonLogin" type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+    
+     <!-- PAGE: ACCOUNT -->
+
+    <div data-role="page" id="AccountPage">
+        <div data-role="header" class="corporateBG"> <a class="ui-btn-left verLista" data-icon="carat-l" href="#Home">Menu</a>
+            <h1>Perfil de usuario</h1>
+        </div>
+
+        <div data-role="content">
+        <div id="user_detail"></div>
+              <a href="" id='logout' class="ui-btn ui-shadow ui-corner-all ui-icon-delete ui-btn-icon-left">Cerrar Session</a>
+        </div>
+    </div>
+    
+    
+     <!-- PAGE: LOCAL STORAGE -->
+
+    <div data-role="page" id="LocalOffline">
+        <div data-role="header" class="corporateBG"> <a class="ui-btn-left verLista" data-icon="carat-l" href="#Home">Menu</a>
+            <h1>Perfil de usuario</h1>
+        </div>
+
+        <div data-role="content">
+       
+            <input type="text" id="field1" placeholder="field1" />
+            <input type="text" id="field2" placeholder="field2" />
+            <input type="text" id="field3" placeholder="field3" />
+            <input type="submit" value="Save" id="btnSave" />
+            <input type="submit" value="Get Data" id="btnGet" />
+            <input type="submit" value="Update Data" id="btnUpdate" />
+             <input type="submit" value="Get Detail " id="btnGetDetail" />
+            
+        <ul data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-filter="true" data-filter-placeholder="Buscar Presupuesto..." data-inset="true" data-role="listview" data-split-icon="delete" data-theme="a" id="offline_list">
+        </ul>
+     	<div class="results"></div>
+        <div class="detailOff"></div>
+    </div>
+    
+    </div>
+    
+</body>
+</html>

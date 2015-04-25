@@ -1,0 +1,121 @@
+body {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:2em;
+	margin:0px;
+	padding:0px;
+	background-color:#fff;
+	/*background-image: url(../images/bg_f9f9f9.jpg);*/
+	width:100%;
+	height:100%;
+}
+input, option{
+	width: 100%;
+	padding:0.1em;
+	font-size:1em;
+	list-style:none;
+	margin:0;
+	color:#666;
+	border:0;
+	border:1px solid #dddddd;
+	background-color:#FFF;
+}
+label{
+	margin:30px 0 0 1em;
+	color:#666;
+}
+ul{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+div{
+	margin:0;
+	padding:0;
+}
+	form{
+	margin:0;
+	padding:0;
+}
+h1{
+    font-size:1em;
+}
+h2{
+	background-color:#003484;
+	color:#FFF;
+	width:100%;
+	padding:0.1em;
+	padding:0.1em;
+font-size:3em;
+}
+.top_menu{
+		background-color:#285775!important;
+		padding:0;
+		width:100%;
+		float:left;
+		margin:0;
+}	
+.top_menu a{ 
+	float: left;
+	width:49.99%;
+	color:#FFF;
+	background-color:#999;
+	display:block;
+	text-decoration:none;
+	text-align:center;
+	
+}
+.clear{
+	clear:both;
+	}
+
+.home_menu ul li{
+	list-style:none;
+	text-decoration:none;
+padding: 2px;}
+
+.home_menu {
+margin: 10px auto auto 5px;
+}
+.home_menu ul li a{
+width:300px;
+display: block;
+margin: 0;}
+.home_menu a{
+	list-style:none;
+	text-decoration:none;
+	color:#666;
+    background: #E4E8EA;
+    padding: 10px;
+    text-align: left;
+    margin: 0;
+}
+a{
+background: #E4E8EA;
+width:100%;
+display: block;
+    text-decoration: none;
+    color: #666;
+    padding: 3px 1px 3px 1px;
+}
+.menu_bar{
+background-color: #285775;
+color: #fff;}
+
+.menu_bar a{
+    color: #fff;
+}
+
+.menu_bar a{
+background-color: #285775;
+color: #fff;}
+
+.print_button{
+background: #E4E8EA;
+width:100%;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+ul li .ui-field-contain{
+font-size: 14px;
+}

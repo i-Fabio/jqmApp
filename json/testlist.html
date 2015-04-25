@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+ <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  <script src="js/my.js"></script>
+  <script>
+    monaca.viewport({width: 320});
+     $(".lista").html("<li>cioa</li>");
+    // PhoneGap event handler
+     document.addEventListener("deviceready", onDeviceReady, false);
+    function onDeviceReady() {
+        $.mobile.loading;
+        $(".questo").html("<li>aaaaaaa</li>");
+        console.log("PhoneGap is ready");
+        
+        $('.verLista').bind("click", function() {
+           $(".questo").html(" <li>werwer</li><li>liwerwerwerma</li><li>liwerwerwerwerwma</li>");
+        });
+    }
+    function writeList(fabio){   
+        var text= fabio;
+         $("#questo").html(text);
+        }
+        
+        
+    function getList(){
+        $.mobile.loading( 'show' );
+        var id = 1;
+            $.ajax({
+    		data: {id: id },
+    		type: "GET",
+    		dataType: "json",
+    		url: "http://bcnmovilexpress.com/gas/json/test.php",
+    		success: function(data){
+    		    writeList(data.respond);
+                alert(data.respond);
+                $.mobile.loading( 'hide' );
+    		    }
+    		});
+    }
+       
+  </script>
+</head>
+<body>
+  <!-- TOP Page -->
+  <div data-role="page" id="TopPage"> 
+    <header data-role="header" data-position="fixed">
+     <a href=""   data-icon="bars" class="ui-btn-left verLista">Listado</a>
+      <h1>Listado</h1>
+      <a href="#AddPage" data-icon="plus" class="ui-btn-right">Add</a>
+    </header>
+  	<section data-role="content">
+      
+      <ul data-role="listview"
+        data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-split-icon="delete" id="questo"> <li>lima</li><li>lima</li><li>lima</li>
+      </ul>
+  	</section> 
+      <div >
+          
+      </div>
+  </div> 
+  
+  <!-- Add Memo Page -->
+  <div data-role="page" id="AddPage">
+    <header data-role="header" data-position="fixed">
+      <a data-role="button" data-rel="back" data-icon="back">Back</a>
+      <h1>Add Memo</h1>
+    </header> 
+    <section data-role="content">
+      <label for="Memo">Memo:</label>
+      <textarea id="Memo"></textarea>
+      <a data-role="button" data-icon="check" id="SaveBtn">Save</a>
+    </section>
+  </div>
+  
+  <!-- Detail Page -->
+  <div data-role="page" id="ShowPage">
+    <header data-role="header" data-position="fixed">
+      <a data-role="button" data-rel="back" data-icon="back">Back</a>
+      <h1></h1>
+    </header> 
+    <section data-role="content">
+      <p></p>
+    </section>
+  </div>
+</body>
+</html>

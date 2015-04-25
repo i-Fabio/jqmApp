@@ -1,0 +1,17 @@
+.concepto{
+	width:80%;
+	}
+.ui-table-reflow.ui-responsive { display: table !important; } 
+
+.red_bg{
+	background-color:#F00;
+}
+
+
+
+.corporateBG{
+	background-color:#285775!important;
+	color:#fff!important;
+	text-shadow: 0 1px 0 #000!important;
+}
+
